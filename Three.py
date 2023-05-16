@@ -1,3 +1,6 @@
+import sys
+
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -18,10 +21,11 @@ class Folder:
         self.elements = 0
         self.children = [None] * 4
 
+root_folder = Folder("raiz")
 
 class BinaryTree:
     def __init__(self):
-        self.root = Node
+        self.root = root_folder
 
     def pretty_print_tree(self, node, prefix="", is_left=True):
         if not node:
@@ -33,13 +37,67 @@ class BinaryTree:
         if node.left:
             self.pretty_print_tree(node.left, prefix + ("    " if is_left else "│   "), True)
 
+    def add_carpet(self, carpet, target: Folder):
+
+        for i in range(4):
+            if target.children[i] is None:
+                target.children.append(carpet)
+            else:
+                print("Carpeta llena")
+
+
+
+    def add_document(self, document, target):
+
+        for i in range(4):
+            if target.children[i] is None:
+                target.children.append(document)
+            else:
+                print("Carpeta llena")
+
+    def modify_carpet(self, carpet):
+        pass
+
+
+    def modify_document(self, document):
+        pass
+
+
+
+Three = BinaryTree()
+
 
 def system():
     print("Bienvenido al sistema de documento y carpetas")
     while True:
 
-        print("Porfavor, seleccione una opcion:","\n","1. Agregar carpeta","2. Agregar archivo","\n","3. Modificar carpeta","\n","4. modificar archivo","\n","5. Salir")
+        print("Porfavor, seleccione una opcion:", "\n", "1. Agregar carpeta", "2. Agregar archivo", "\n",
+              "3. modificar carpeta", "\n", "4. modificar archivo", "\n", "5. Salir")
 
-        Desicion = input()
+        Desicion = int(input(""))
+
+        if Desicion == 1:
+            Three.add_carpet()
+            break
+
+        elif Desicion == 2:
+            Three.add_document()
+            break
+
+
+        elif Desicion == 3:
+            Three.modify_carpet()
+            break
+
+
+        elif Desicion == 4:
+            Three.modify_document()
+            break
+
+
+        elif Desicion == 5:
+            print("Terminando la aplicacion")
+            sys.exit()
+
 
 system()
