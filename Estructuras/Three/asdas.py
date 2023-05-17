@@ -32,7 +32,6 @@ class Archivo:
         self.simbolo = "📄 "
 
 
-
 def buscar_carpeta(carpeta, nombre):
     if carpeta.nombre == nombre:
         return carpeta
@@ -61,8 +60,7 @@ def agregar_archivo(carpeta_madre, nombre_archivo, extension, peso):
     if not carpeta_madre:
         raise ElementoNoEncontrado("Carpeta madre no encontrada.")
     for elemento in carpeta_madre.elementos:
-        if elemento and isinstance(elemento,
-                                   Archivo) and elemento.nombre == nombre_archivo and elemento.extension == extension:
+        if elemento and isinstance(elemento, Archivo) and elemento.nombre == nombre_archivo:
             raise NombreInvalido("Ya existe un archivo con el mismo nombre y extensión.")
     for i, elemento in enumerate(carpeta_madre.elementos):
         if not elemento:
@@ -89,8 +87,8 @@ def modificar_archivo(carpeta_raiz, nombre_carpeta, nombre_archivo, nueva_extens
             elemento.peso = nuevo_peso
             archivo_modificado = True
             break
-    if not archivo_modificado:
-        raise ElementoNoEncontrado("Archivo no encontrado.")
+        else:
+            raise ElementoNoEncontrado("Archivo no encontrado.")
 
 
 def imprimir_arbol(carpeta, nivel=0):
@@ -100,7 +98,8 @@ def imprimir_arbol(carpeta, nivel=0):
             if isinstance(elemento, Carpeta):
                 imprimir_arbol(elemento, nivel + 1)
             else:
-                print("  " * (nivel + 1) + elemento.nombre + "." + "📄 " + elemento.extension + " (" + str(elemento.peso) + ")")
+                print("  " * (nivel + 1) + elemento.nombre + "." + "📄 " + elemento.extension + " (" + str(
+                    elemento.peso) + ")")
 
 
 def main():
@@ -117,6 +116,9 @@ def main():
                 nombre_nueva_carpeta = input("Ingrese el nombre de la nueva carpeta: ")
                 agregar_carpeta(buscar_carpeta(carpeta_raiz, nombre_carpeta_madre), nombre_nueva_carpeta)
                 print("Carpeta agregada.")
+
+                # ------------------------------------------------------------------------------------------
+
             elif opcion == "2":
                 nombre_carpeta_madre = input("Ingrese el nombre de la carpeta madre: ")
                 entrada = input("Ingrese el nombre del archivo, extensión y peso (ejemplo: archivo.txt 56): ")
@@ -126,11 +128,17 @@ def main():
                 peso = int(peso)
                 agregar_archivo(buscar_carpeta(carpeta_raiz, nombre_carpeta_madre), nombre_archivo, extension, peso)
                 print("Archivo agregado.")
+
+                # ------------------------------------------------------------------------------------------
+
             elif opcion == "3":
                 nombre_actual = input("Ingrese el nombre actual de la carpeta: ")
                 nuevo_nombre = input("Ingrese el nuevo nombre de la carpeta: ")
                 modificar_carpeta(carpeta_raiz, nombre_actual, nuevo_nombre)
                 print("Carpeta modificada.")
+
+                # ------------------------------------------------------------------------------------------
+
             elif opcion == "4":
                 nombre_carpeta = input("Ingrese el nombre de la carpeta madre: ")
                 nombre_archivo = input("Ingrese el nombre actual del archivo: ")
@@ -138,12 +146,21 @@ def main():
                 nuevo_peso = int(input("Ingrese el nuevo peso del archivo: "))
                 modificar_archivo(carpeta_raiz, nombre_carpeta, nombre_archivo, nueva_extension, nuevo_peso)
                 print("Archivo modificado.")
+
+                # ------------------------------------------------------------------------------------------
+
             elif opcion == "5":
                 print("terminando..")
                 time.sleep(2)
                 break
+
+                # ------------------------------------------------------------------------------------------
+
             else:
                 print("Opción no válida.")
+
+                # ------------------------------------------------------------------------------------------
+
         except (ElementoNoEncontrado, EspacioNoDisponible, NombreInvalido, EntradaInvalida) as e:
             print(str(e))
 
